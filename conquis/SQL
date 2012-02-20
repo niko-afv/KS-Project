@@ -1,0 +1,89 @@
+create table iglesias(
+id_igleisa int not null primary key auto_increment,
+nombre varchar(50) not null,
+direccion varchar(50));
+####################################################################
+create table clubes(
+id_club int not null primary key auto_increment,
+nombre varchar(50) not null,
+iglesia int,
+index(iglesia),
+foreign key(iglesia) references iglesias(id_igleisa));
+####################################################################
+create table roles(
+id_rol int not null primary key auto_increment,
+nombre varchar(50) not null);
+####################################################################
+create table miembros(
+id_miembro int not null primary key auto_increment,
+nombre varchar(50),
+edad int,
+email varchar(50) not null,
+club int,
+index(club),
+foreign key(club) references clubes(id_club)
+);
+####################################################################
+ALTER TABLE clubes ADD COLUMN director INT;
+####################################################################
+ALTER TABLE clubes ADD FOREIGN KEY(director) references miembros(id_miembro);
+####################################################################
+create table miembros_roles(
+id_miembro int,
+id_rol int,
+index(id_miembro),
+index(id_rol),
+foreign key(id_miembro) references miembros(id_miembro),
+foreign key(id_rol) references roles(id_rol)
+);
+####################################################################
+create table usuarios(
+usuario varchar(50) not null primary key,
+password varchar(255) not null,
+miembro int,
+index(miembro),
+foreign key(miembro) references miembros(id_miembro));
+
+/*****************************************************************************************************************************************/
+
+insert into iglesias values(null,'Rejas Sur',null);
+insert into iglesias values(null,'Villa Francia',null);
+insert into iglesias values(null,'Rejas Norte',null);
+insert into iglesias values(null,'Central Santiago',null);
+insert into iglesias values(null,'Alameda',null);
+
+insert into iglesias values(null,'Las Condes',null);
+insert into iglesias values(null,'La marina',null);
+insert into iglesias values(null,'Villa Sur',null);
+insert into iglesias values(null,'Renacer',null);
+insert into iglesias values(null,'Pajaritos',null);
+insert into iglesias values(null,'Central Maipu',null);
+insert into iglesias values(null,'Villa Mexico',null);
+insert into iglesias values(null,'Pedro Donoso',null);
+insert into iglesias values(null,'Pudahuel',null);
+insert into iglesias values(null,'Fé y Esperanza',null);
+insert into iglesias values(null,'Corona Zueca',null);
+insert into iglesias values(null,'Plaza Garin',null);
+insert into iglesias values(null,'La Paz',null);
+insert into iglesias values(null,'Central La Cisterna',null);
+insert into iglesias values(null,'La Victoria',null);
+
+
+
+
+
+insert into clubes values (null,'Rejas Sur',1,null);
+insert into clubes values (null,'Republica de Francia',2,null);
+
+insert into roles values (null,'Director');
+insert into roles values (null,'Sub Director');
+insert into roles values (null,'Secretaria(o)');
+insert into roles values (null,'Tesorero');
+insert into roles values (null,'Capellán');
+insert into roles values (null,'Lider / Consejero');
+insert into roles values (null,'Capitán');
+insert into roles values (null,'Conquistador');
+
+insert into miembros values(null,'Jonathan Ibarra',null,'jonatan@ibarra.cl',1);
+
+UPDATE clubes SET director = '2' where id_club=1;
